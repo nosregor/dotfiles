@@ -9,19 +9,19 @@ backup() {
 }
 
 #!/bin/zsh
-for name in *; do
-  if [ ! -d "$name" ]; then
-    target="$HOME/.$name"
-    if [[ ! "$name" =~ '\.sh$' ]] && [ "$name" != 'README.md' ] && [[ ! "$name" =~ '\.sublime-settings$' ]]; then
-      backup $target
+# for name in *; do
+#   if [ ! -d "$name" ]; then
+#     target="$HOME/.$name"
+#     if [[ ! "$name" =~ '\.sh$' ]] && [ "$name" != 'README.md' ] && [[ ! "$name" =~ '\.sublime-settings$' ]]; then
+#       backup $target
 
-      if [ ! -e "$target" ]; then
-        echo "-----> Symlinking your new $target"
-        ln -s "$PWD/$name" "$target"
-      fi
-    fi
-  fi
-done
+#       if [ ! -e "$target" ]; then
+#         echo "-----> Symlinking your new $target"
+#         ln -s "$PWD/$name" "$target"
+#       fi
+#     fi
+#   fi
+# done
 
 REGULAR="\\033[0;39m"
 YELLOW="\\033[1;33m"
@@ -37,15 +37,15 @@ if [ ! -d "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" ]; then
 fi
 cd "$CURRENT_DIR"
 
-setopt nocasematch
-if [[ ! `uname` =~ "darwin" ]]; then
-  git config --global core.editor "subl -n -w $@ >/dev/null 2>&1"
-  echo 'export BUNDLER_EDITOR="subl $@ >/dev/null 2>&1 -a"' >> zshrc
-else
-  git config --global core.editor "'/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl' -n -w"
-  bundler_editor="'/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl'"
-  echo "export BUNDLER_EDITOR=\"${bundler_editor} -a\"" >> zshrc
-fi
+# setopt nocasematch
+# if [[ ! `uname` =~ "darwin" ]]; then
+#   git config --global core.editor "subl -n -w $@ >/dev/null 2>&1"
+#   echo 'export BUNDLER_EDITOR="subl $@ >/dev/null 2>&1 -a"' >> zshrc
+# else
+#   git config --global core.editor "'/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl' -n -w"
+#   bundler_editor="'/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl'"
+#   echo "export BUNDLER_EDITOR=\"${bundler_editor} -a\"" >> zshrc
+# fi
 
 # Sublime Text
 # if [[ ! `uname` =~ "darwin" ]]; then
