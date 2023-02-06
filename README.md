@@ -53,9 +53,9 @@ $ exec zsh
 
 This will install:
 
-- [Homebrew](###homebrew)
-- [zsh](###zsh)
-- [Oh-my-zsh](###oh-my-zsh)
+- [Homebrew](#homebrew)
+- [zsh](#zsh)
+- [Oh-my-zsh](#oh-my-zsh)
 
 ### Homebrew
 
@@ -110,8 +110,6 @@ At the end your terminal should look like this:
 ✅ If it does, you can continue 👍
 
 ## Full installation
-
----
 
 In [functions](./zsh/.functions) you can run/rerun/modify the configuration.
 
