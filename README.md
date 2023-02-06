@@ -68,7 +68,7 @@ This will ask for your confirmation (hit `Enter`) and your **macOS user account 
 ![macOS Homebrew installation warning](images/macos_homebrew_warning.png)
 
 ```bash
-# ⚠️ Only execute these commands if you saw this warning ☝
+# :warning: Only execute these commands if you saw this warning ☝
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
