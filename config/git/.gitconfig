@@ -1,0 +1,101 @@
+[user]
+	name = Max Tkachenko
+	email = makst@users.noreply.github.com
+
+[alias]
+	lca = log --pretty=format:'[%h] %cd - Committer: %cn (%ce), Author: %an (%ae)'
+	# Switch to a branch, creating it if necessary
+	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+	# Switch to new branch and set it to track the upstream branch
+	get = "!f() { git checkout --track origin/\"$1\"; }; f"
+	aliases = config --get-regexp alias
+
+	co = checkout
+	st = status -sb
+	br = branch
+	ci = commit
+	fo = fetch origin
+	d = !git --no-pager diff
+	dt  = difftool
+	stat = !git --no-pager diff --stat
+
+	# Set remotes/origin/HEAD -> defaultBranch (copied from https://stackoverflow.com/a/67672350/14870317)
+	remoteSetHead = remote set-head origin --auto
+
+	# Get default branch name (copied from https://stackoverflow.com/a/67672350/14870317)
+	defaultBranch = !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
+
+	# Clean merged branches (adapted from https://stackoverflow.com/a/6127884/14870317)
+	sweep = !git branch --merged $(git defaultBranch) | grep -E -v " $(git defaultBranch)$" | xargs -r git branch -d && git remote prune origin
+
+	# http://www.jukie.net/bart/blog/pimping-out-git-log
+	lg = log --graph --all --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(yellow)%d%Creset'
+
+	# Serve local repo. http://coderwall.com/p/eybtga
+	# Then other can access via `git clone git://#{YOUR_IP_ADDRESS}/
+	serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+
+	# Checkout to defaultBranch
+	m = !git checkout $(git defaultBranch)
+
+	# Removes a file from the index
+	unstage = reset HEAD --
+
+[color]
+	# Use colors in Git commands that are capable of colored output when
+	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+	ui = true
+	# branch = auto
+  	# diff = auto
+  	# interactive = auto
+  	# status = auto
+  	# ui = auto
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	commit = yellow bold
+	whitespace = red reverse
+
+[color "status"]
+	added = green
+	changed = red
+	untracked = white
+
+[diff]
+	# Detect copies as well as renames
+	renames = copies
+
+[help]
+	# Automatically correct and execute mistyped commands
+	autocorrect = 1
+
+[merge]
+	# Include summaries of merged commits in newly created merge commit messages
+	log = true
+
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	editor = code --wait
+
+[diff]
+    tool = default-difftool
+
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+
+[pull]
+	rebase = false

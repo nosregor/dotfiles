@@ -1,0 +1,241 @@
+#!/usr/bin/env zsh
+real_script_dir="$(dirname "$(stat -f '%Y' ~/.zshrc)")"
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
+
+# change alacritty theme
+# generated theme in ~/.vimrc_background doesn't really work as the theme names do not match :(
+# this func let's you choose a theme for both alacritty and vim so you can sync them manually
+function change_theme() {
+  alacritty-colorscheme -V apply $(find ~/.config/alacritty/colors/* -type f -exec basename {} \; | fzf)
+  echo "vim.cmd [[colorscheme $(find ~/.local/share/nvim/site/pack/packer/start/base16-vim/colors/* -type f -exec basename {} .vim \; | fzf)]]" > ~/.config/nvim/after/plugin/base16-vim.lua
+}
+
+# -------------------------
+# CHEATSHEETS 
+# -------------------------
+
+# Takes ~15-20 min to sync the full catalog
+function sync_cheatsh() {
+  mkdir -p ~/cheatsheets/cheatsh/
+  
+  # get a list with all cheatsheets
+  curl -s cheat.sh/:list --output ~/cheatsheets/cheatsh/list
+
+  while IFS= read -r line; do
+    chsh_req=$line
+    file_name=$(echo "$line" | sed -E 's/[^[:alnum:][:space:]]/_/g')
+    curl -s cheat.sh/$chsh_req --output ~/cheatsheets/cheatsh/$file_name
+  done < ~/cheatsheets/cheatsh/list
+
+  echo "Done syncing cheat.sh"
+}
+
+function sync_learnx_in_y_minutes() {
+  mkdir -p ~/cheatsheets/learnxinyminutes/
+}
+
+function sync_cheatsheets() {
+  sync_cheatsh
+  sync_learnx_in_y_minutes
+}
+
+# -------------------------
+# INSTALL / SETUP FUNCTIONS
+# -------------------------
+
+function install_and_update_zsh_plugins() {
+  echo "=> Installing zsh plugin 'zsh-syntax-highlighting'..."
+  current_dir=$(pwd)
+
+  [[ ! -d $ZSH_CUSTOM/plugins/zsh-syntax-highlighting ]] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+  cd $ZSH_CUSTOM/plugins/zsh-syntax-highlighting && git pull -q
+
+  [[ ! -d $ZSH_CUSTOM/plugins/zsh-autosuggestions ]] && git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+  cd $ZSH_CUSTOM/plugins/zsh-autosuggestions && git pull -q
+
+  [[ ! -d $ZSH_CUSTOM/plugins/zsh-vi-mode ]] && git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
+  cd $ZSH_CUSTOM/plugins/zsh-vi-mode && git pull -q
+
+  [[ ! -d $ZSH_CUSTOM/plugins/zsh-nvm ]] && git clone https://github.com/lukechilds/zsh-nvm $ZSH_CUSTOM/plugins/zsh-nvm
+  cd $ZSH_CUSTOM/plugins/zsh-nvm && git pull -q
+
+  [[ ! -d $ZSH_CUSTOM/plugins/fzf-tab ]] && git clone https://github.com/Aloxaf/fzf-tab $ZSH_CUSTOM/plugins/fzf-tab
+  cd $ZSH_CUSTOM/plugins/fzf-tab && git pull -q
+
+  cd $current_dir
+}
+
+function rust_setup() {
+  # rustup
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+  # bob - nvim package manager
+  cargo install --git https://github.com/MordechaiHadad/bob.git 
+}
+
+function brew_setup() {
+  echo "=> Installing must-have brew formulas"
+  # reattach-to-user-namespace - [access macOS clipboard from within tmux sessions](https://github.com/gpakosz/.tmux#accessing-the-macos-clipboard-from-within-tmux-sessions-tmux--26)
+  brew install \
+    gnu-sed \
+    cmake \
+    fd \
+    git \
+    jq \
+    gh \
+    wget \
+    python \
+    zsh \
+    navi \
+    yank \
+    ripgrep \
+    diff-so-fancy \
+    reattach-to-user-namespace \
+    tree-sitter \
+    podman \ 
+    docker-compose
+
+  brew install jesseduffield/lazygit/lazygit
+
+  brew install --cask \
+    alacritty \
+    iterm2 \
+    visual-studio-code
+
+  # nerd fonts
+  brew tap homebrew/cask-fonts
+  brew install --cask font-hack-nerd-font
+
+  # command line tool for processing HTML
+  brew install https://raw.githubusercontent.com/EricChiang/pup/master/pup.rb
+}
+
+function setup_window_management() {
+  # for yabai and skhd
+  brew tap koekeishiya/formulae
+  brew install yabai skhd
+
+  # start services
+  brew services start yabai
+  brew services start skhd 
+
+  ln -Fs "$real_script_dir/config/.yabairc" "$HOME/.yabairc"
+  ln -Fs "$real_script_dir/config/.skhdrc" "$HOME/.skhdrc"
+}
+
+function fzf_setup() {
+  if [[ ! -f ~/.fzf.zsh ]]; then
+    # fzf
+    brew install fzf
+  fi
+
+  # exa - improved file/directory listing
+  # bat - a cat clone with syntax highlighting and Git integration
+  # lesspipe - display more with less
+  brew install exa bat lesspipe
+
+  ln -Fs "$real_script_dir/.fzf.zsh" "$HOME/.fzf.zsh"
+}
+
+function navi_data_dir_setup() {
+  ln -Fs "$real_script_dir/data_dir/navi/cheats" "$HOME/Library/Application Support/navi/cheats/makst_cheats"
+}
+
+function npm_setup() {
+  npm install -g \
+    typescript 
+}
+
+function remap_keys() {
+  # https://apple.stackexchange.com/a/283253
+  # Caps Lock -> Right Ctrl
+  hidutil property --set '{"UserKeyMapping":
+      [{"HIDKeyboardModifierMappingSrc":0x700000039,
+        "HIDKeyboardModifierMappingDst":0x7000000e4}]
+  }'
+}
+
+function setup_tmux() {
+  ln -Fs "$real_script_dir/config/.tmux.conf" "$HOME/.tmux.conf"
+}
+
+function setup_alacritty() {
+  if [[ ! -L "$HOME/.config/alacritty" ]]; then
+    ln -Fs "$real_script_dir/config/alacritty" "$HOME/.config/alacritty"
+    pip install --user alacritty-colorscheme
+  fi
+
+  DEST="$HOME/.eendroroy-colorschemes"
+  [[ ! -d $DEST ]] && git clone https://github.com/eendroroy/alacritty-theme $DEST &&  ln -s "$DEST/themes" "$HOME/.config/alacritty/colors"
+  cd $DEST && git pull -q
+}
+
+function setup_nvim() {
+  if [[ ! -L "$HOME/.config/nvim" ]]; then
+    ln -Fs "$real_script_dir/config/nvim" "$HOME/.config/nvim"
+    ln -Fs $(which nvim) /usr/local/bin/vim
+  fi
+
+  # install nvim packer (lua package manager)
+  [[ ! -d ~/.local/share/nvim/site/pack/packer ]] && git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+}
+
+# http://stratus3d.com/blog/2015/02/28/sync-iterm2-profile-with-dotfiles-repository/
+function sync_iterm_profile() {
+  # Specify the preferences directory
+  defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$real_script_dir/config/iterm2"
+
+  # Tell iTerm2 to use the custom preferences in the directory
+  defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+}
+
+function setup_git() {
+  ln -Fs "$real_script_dir/config/git/.gitconfig" "$HOME/.gitconfig"
+}
+
+function setup_vs_code() {
+  cp -f "$real_script_dir/config/git/hooks/post-merge" "$real_script_dir/.git/hooks/post-merge"
+  chmod +x "$real_script_dir/.git/hooks/post-merge"
+  cp -f "$real_script_dir/config/git/hooks/pre-commit" "$real_script_dir/.git/hooks/pre-commit"
+  chmod +x "$real_script_dir/.git/hooks/pre-commit"
+
+  if [[ ! -L "$HOME/Library/Application Support/Code/User/snippets" ]]; then
+    ln -Fs "$real_script_dir/config/VSCode/snippets" "$HOME/Library/Application Support/Code/User/snippets"
+    ln -Fs "$real_script_dir/config/VSCode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
+    ln -Fs "$real_script_dir/config/VSCode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+  fi
+}
+
+# https://github.com/ccontavalli/ssh-ident
+function install_ssh_ident() {
+  if [[ ! -f ~/bin/ssh-ident ]]; then
+    mkdir -p ~/bin
+    wget -O ~/bin/ssh-ident goo.gl/MoJuKB
+    chmod 0755 ~/bin/ssh-ident
+
+    ln -Fs  ~/bin/ssh-ident ~/bin/ssh
+    ln -Fs  ~/bin/ssh-ident ~/bin/scp
+    ln -Fs  ~/bin/ssh-ident ~/bin/sftp
+  fi
+}
+
+function setup_dotfiles() {
+  brew_setup
+  rust_setup
+  fzf_setup
+  navi_data_dir_setup
+  npm_setup
+  # install_nvm
+  install_ssh_ident
+  setup_git
+  setup_vs_code
+  setup_tmux
+  setup_nvim
+  setup_alacritty
+  sync_iterm_profile
+  remap_keys
+}

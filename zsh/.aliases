@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+alias sn="spotify next"
+alias sp="spotify prev"
+
+# https://apple.stackexchange.com/a/110541
+alias copy_last_cmd='fc -ln -1 | awk '\''{$1=$1}1'\'' ORS='\'''\'' | pbcopy'
+
+alias lg='lazygit'
+
+alias docker="podman"
+
+# # Get External IP / Internet Speed
+# alias myip="curl https://ipinfo.io/json" # or /ip for plain-text ip
+# alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
+
+# Quickly serve the current directory as HTTP
+alias serve='ruby -run -e httpd . -p 8000' # Or python -m SimpleHTTPServer :)
+
+# Postgres shortcuts
+alias pgstart='pg_ctl -D /usr/local/var/postgres start'
+alias pgstop='pg_ctl -D /usr/local/var/postgres stop'
+alias pgrestart='pg_ctl -D /usr/local/var/postgres restart'

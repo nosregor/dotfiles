@@ -1,0 +1,8 @@
+*.retry
+# do not include extra vars, as this might contain secret information
+roles/*/vars/main.yml
+zsh/.private
+zsh/.zshdefault.zwc
+*.DS_Store
+config/alacritty/colors
+config/nvim/lua/user/hidden/*
