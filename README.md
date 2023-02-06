@@ -42,8 +42,6 @@ Once this is done, you can try to install again.
 
 ## Prepare zsh install
 
----
-
 From inside this repo, run
 
 ```bash
