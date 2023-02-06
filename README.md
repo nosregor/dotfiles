@@ -10,7 +10,7 @@ Let's start 🚀
 - [Prepare zsh install](##prepare-zsh-install)
 - [Full installation](##full-installation)
 
-## Command Line Tools
+## Command line Tools
 
 ---
 
@@ -115,108 +115,13 @@ At the end your terminal should look like this:
 
 ---
 
-In [functions](./zsh/.functions) you can run/rerun/modify the configuration to your liking.
+In [functions](./zsh/.functions) you can run/rerun/modify the configuration.
 
 ```bash
 $ setup_dotfiles # idempotent, can be executed after every `git pull`
 ```
 
-In [config](./config/) you can edit the settings to alacritty, git, iterm2, nvim, VSCode, skhdrc, tmux and yabairc.
-
-- [Brew](###brew_setup)
-- [VS code extensions](###vs-code-extensions)
-- [git](###git)
-- rust_setup
-- fzf_setup
-- navi_data_dir_setup
-- npm_setup
-- setup_tmux
-- setup_nvim
-- setup_alacritty
-- sync_iterm_profile
-- remap_keys
-- install_ssh_ident
-
-### brew_setup
-
-Here is a list of the formulaes you are installing:
-
-- gnu-sed
-- cmake
-- fd
-- git
-- jq
-- gh
-- wget
-- python
-- zsh
-- navi
-- yank
-- ripgrep
-- diff-so-fancy
-- reattach-to-user-namespace
-- tree-sitter
-- podman
-- docker-compose
-- jesseduffield/lazygit/lazygit
-
-install:
-
-- alacritty
-- iterm2
-- visual-studio-code
-
-nerd fonts:
-brew tap homebrew/cask-fonts
-brew install --cask font-hack-nerd-font
-
-command line tool for processing HTML:
-
-- https://raw.githubusercontent.com/EricChiang/pup/master/pup.rb
-
-### setup VS code extensions
-
-Let's install some useful extensions to VS Code. You can manually Copy-paste the following commands in your terminal:
-
-```bash
-code --install-extension Rubymaniac.vscode-paste-and-indent
-```
-
-Or just add the extensions to the [functions](./zsh/.functions).
-
-Here is a list of the extensions you are installing:
-
-- [Sublime Text Keymap and Settings Importer](https://marketplace.visualstudio.com/items?itemName=ms-vscode.sublime-keybindings)
-- [VSCode Great Icons](https://marketplace.visualstudio.com/items?itemName=emmanuelbeziat.vscode-great-icons)
-- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
-- [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Paste and Indent](https://marketplace.visualstudio.com/items?itemName=Rubymaniac.vscode-paste-and-indent)
-- [SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite)
-
-### setup_git
-
-### rust_setup
-
-### fzf_setup
-
-### navi_data_dir_setup
-
-### npm_setup
-
-### setup_tmux
-
-### setup_nvim
-
-### setup_alacritty
-
-### sync_iterm_profile
-
-### remap_keys
-
-### install_ssh_ident
-
-## Extra stuff
+Add/edit settings for alacritty, git, iterm2, nvim, VSCode, tmux, yabai and skhd in [config](./config/).
 
 ### Live Share configuration
 
@@ -224,7 +129,7 @@ Here is a list of the extensions you are installing:
 
 Launch VS Code from your terminal by typing `code` and pressing `Enter`.
 
-Click on the little arrow at the bottom of the left bar :point_down:
+Click on the little arrow at the bottom of the left bar 👇
 
 ![VS Code Live Share](images/vscode_live_share.png)
 

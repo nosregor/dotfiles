@@ -225,7 +225,7 @@ function install_ssh_ident() {
 
 function setup_dotfiles() {
   brew_setup
-  rust_setup
+  # rust_setup
   fzf_setup
   navi_data_dir_setup
   npm_setup

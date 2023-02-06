@@ -1,6 +1,6 @@
 [user]
-	name = Max Tkachenko
-	email = makst@users.noreply.github.com
+	name = Andrew Rogerson
+	email = nosregor@users.noreply.github.com
 
 [alias]
 	lca = log --pretty=format:'[%h] %cd - Committer: %cn (%ce), Author: %an (%ae)'
