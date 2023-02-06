@@ -12,8 +12,6 @@ Let's start 🚀
 
 ## Command line Tools
 
----
-
 Open a new terminal, copy-paste the following command and hit `Enter`:
 
 ```bash
