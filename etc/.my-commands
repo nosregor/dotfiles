@@ -1,0 +1,9 @@
+# Connecting to the PSQL server via CLI (https://dev.to/shree_j/how-to-install-and-run-psql-using-docker-41j2#:~:text=Connecting%20to%20the%20PSQL%20server%20via%20CLI%20%3A&text=Run%20the%20below%20command%20to,p%205432%20%2DU%20postgres%20%2DW)
+# 1.Find container-id 
+docker ps -a
+# 2. Enter into the container 
+docker exec -it <Container-ID> bash
+# 3. Authenticate as postgres user
+psql -h localhost -p 5432 -U postgres -W
+# 4. Enter password used while creating the PSQL container
+

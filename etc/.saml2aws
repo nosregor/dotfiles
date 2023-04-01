@@ -1,0 +1,64 @@
+[tier-sandbox]
+url                  = https://okta.tier-services.io/home/amazon_aws/0oa2vbiihzhrlCRur0i7/272
+username             = andrew.rogerson@tier.app
+provider             = Okta
+mfa                  = OKTA
+skip_verify          = false
+timeout              = 0
+aws_urn              = urn:amazon:webservices
+aws_session_duration = 3600
+aws_profile          = tier-sandbox
+role_arn             = arn:aws:iam::199745669981:role/TM-cross-account-admin
+region               = eu-central-1
+
+[tier-stage]
+url                  = https://okta.tier-services.io/home/amazon_aws/0oa2vbiihzhrlCRur0i7/272
+username             = andrew.rogerson@tier.app
+provider             = Okta
+mfa                  = OKTA
+skip_verify          = false
+timeout              = 0
+aws_urn              = urn:amazon:webservices
+aws_session_duration = 10800
+aws_profile          = tier-stage
+role_arn             = arn:aws:iam::075108987694:role/TM-team-ravens-operator
+region               = eu-central-1
+
+[tier-production]
+url                  = https://okta.tier-services.io/home/amazon_aws/0oa2vbiihzhrlCRur0i7/272
+username             = andrew.rogerson@tier.app
+provider             = Okta
+mfa                  = OKTA
+skip_verify          = false
+timeout              = 0
+aws_urn              = urn:amazon:webservices
+aws_session_duration = 3600
+aws_profile          = tier-production
+role_arn             = arn:aws:iam::373437620866:role/TM-team-ravens-operator
+region               = eu-central-1
+
+[tier-stage-platform]
+url                  = https://okta.tier-services.io/home/amazon_aws/0oa2vbiihzhrlCRur0i7/272
+username             = andrew.rogerson@tier.app
+provider             = Okta
+mfa                  = PUSH
+skip_verify          = false
+timeout              = 0
+aws_urn              = urn:amazon:webservices
+aws_session_duration = 10800
+aws_profile          = tier-stage-platform
+role_arn             = arn:aws:iam::075108987694:role/ravens-operator
+region               = eu-central-1
+
+[tier-production-platform]
+url                  = https://okta.tier-services.io/home/amazon_aws/0oa2vbiihzhrlCRur0i7/272
+username             = andrew.rogerson@tier.app
+provider             = Okta
+mfa                  = PUSH
+skip_verify          = false
+timeout              = 0
+aws_urn              = urn:amazon:webservices
+aws_session_duration = 10800
+aws_profile          = tier-stage-platform
+role_arn             = arn:aws:iam::373437620866:role/ravens-operator
+region               = eu-central-1

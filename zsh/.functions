@@ -94,15 +94,15 @@ function brew_setup() {
     yank \
     ripgrep \
     diff-so-fancy \
-    reattach-to-user-namespace \
-    tree-sitter \
-    podman \ 
+    # reattach-to-user-namespace \
+    # tree-sitter \
+    # podman \ 
     docker-compose
 
   brew install jesseduffield/lazygit/lazygit
 
+  # alacritty \
   brew install --cask \
-    alacritty \
     iterm2 \
     visual-studio-code
 
@@ -159,30 +159,6 @@ function remap_keys() {
   }'
 }
 
-function setup_tmux() {
-  ln -Fs "$real_script_dir/config/.tmux.conf" "$HOME/.tmux.conf"
-}
-
-function setup_alacritty() {
-  if [[ ! -L "$HOME/.config/alacritty" ]]; then
-    ln -Fs "$real_script_dir/config/alacritty" "$HOME/.config/alacritty"
-    pip install --user alacritty-colorscheme
-  fi
-
-  DEST="$HOME/.eendroroy-colorschemes"
-  [[ ! -d $DEST ]] && git clone https://github.com/eendroroy/alacritty-theme $DEST &&  ln -s "$DEST/themes" "$HOME/.config/alacritty/colors"
-  cd $DEST && git pull -q
-}
-
-function setup_nvim() {
-  if [[ ! -L "$HOME/.config/nvim" ]]; then
-    ln -Fs "$real_script_dir/config/nvim" "$HOME/.config/nvim"
-    ln -Fs $(which nvim) /usr/local/bin/vim
-  fi
-
-  # install nvim packer (lua package manager)
-  [[ ! -d ~/.local/share/nvim/site/pack/packer ]] && git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-}
 
 # http://stratus3d.com/blog/2015/02/28/sync-iterm2-profile-with-dotfiles-repository/
 function sync_iterm_profile() {
@@ -223,19 +199,43 @@ function install_ssh_ident() {
   fi
 }
 
+function setup_tmux() {
+  ln -Fs "$real_script_dir/config/.tmux.conf" "$HOME/.tmux.conf"
+}
+
+function setup_alacritty() {
+  if [[ ! -L "$HOME/.config/alacritty" ]]; then
+    ln -Fs "$real_script_dir/config/alacritty" "$HOME/.config/alacritty"
+    pip install --user alacritty-colorscheme
+  fi
+
+  DEST="$HOME/.eendroroy-colorschemes"
+  [[ ! -d $DEST ]] && git clone https://github.com/eendroroy/alacritty-theme $DEST &&  ln -s "$DEST/themes" "$HOME/.config/alacritty/colors"
+  cd $DEST && git pull -q
+}
+
+function setup_nvim() {
+  if [[ ! -L "$HOME/.config/nvim" ]]; then
+    ln -Fs "$real_script_dir/config/nvim" "$HOME/.config/nvim"
+    ln -Fs $(which nvim) /usr/local/bin/vim
+  fi
+
+  # install nvim packer (lua package manager)
+  [[ ! -d ~/.local/share/nvim/site/pack/packer ]] && git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+}
+
 function setup_dotfiles() {
   brew_setup
-  # rust_setup
   fzf_setup
   navi_data_dir_setup
   npm_setup
-  # install_nvm
   install_ssh_ident
   setup_git
   setup_vs_code
-  setup_tmux
-  setup_nvim
-  setup_alacritty
-  sync_iterm_profile
-  remap_keys
+  # sync_iterm_profile
+  # remap_keys
+  # rust_setup
+  # setup_tmux
+  # setup_nvim
+  # setup_alacritty
 }

@@ -1,0 +1,81 @@
+[user]
+	name = Andrew Rogerson
+	email = werdnanosregor@gmail.com
+
+[url "ssh://git@github.com/"]
+
+[github]
+  user = nosregor
+
+[credential]
+  helper = cache --timeout=86400
+
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+  ui = auto
+
+[color "branch"]
+  current = green
+  remote = yellow
+
+[core]
+	editor = code --wait
+
+[diff]
+  compactionHeuristic = true
+  rename = copy
+  check = true
+
+[pager]
+  color = true
+
+[init]
+	defaultBranch = main
+
+[push]
+  default = simple
+
+[pull]
+  rebase = true
+
+# [commit]
+#   gpgsign = true
+#   template = ~/.dotfiles/gitmessage
+#   verbose = true
+
+[help]
+  autocorrect = 1
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[alias]
+  co = checkout
+  st = status -sb
+  br = branch
+  ci = commit
+  fo = fetch origin
+  d = !git --no-pager diff
+  dt  = difftool
+  stat = !git --no-pager diff --stat
+
+  # Clean merged branches
+  sweep = !git branch --merged master | grep -v 'master$' | xargs git branch -d && git remote prune origin
+
+  # http://www.jukie.net/bart/blog/pimping-out-git-log
+  lg = log --graph --all --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(yellow)%d%Creset'
+
+  # Serve local repo. http://coderwall.com/p/eybtga
+  # Then other can access via `git clone git://#{YOUR_IP_ADDRESS}/
+  serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+
+  m = checkout master
+  
+  # Removes a file from the index
+  unstage = reset HEAD --

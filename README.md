@@ -7,7 +7,9 @@ Please **read them carefully and execute all commands in the following order**.
 Let's start 🚀
 
 1. [Command line tools](#command-line-tools)
-2.  [Prepare zsh install](#prepare-zsh-install)
+
+2. [Prepare zsh install](#prepare-zsh-install)
+
 3. [Full installation](#full-installation)
 
 ## Command line Tools

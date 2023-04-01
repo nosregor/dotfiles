@@ -1,0 +1,13 @@
+# Get External IP / Internet Speed
+# alias myip="curl https://ipinfo.io/json" # or /ip for plain-text ip
+alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
+# alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
+
+# Quickly serve the current directory as HTTP
+alias serve='ruby -run -e httpd . -p 8000' # Or python -m SimpleHTTPServer :)
+
+# Postgres shortcuts
+alias pg-start="pg_ctl -D /usr/local/var/postgres start"
+alias pg-stop="pg_ctl -D /usr/local/var/postgres stop"
+alias pg-restart="pg_ctl -D /usr/local/var/postgres restart"
